@@ -7,6 +7,8 @@ import "./app.scss";
 
 function App() {
   const [welcome, setWelcome] = useState(true);
+  const [categoryFetchError, setCategoryFetchError] = useState("");
+  const [flashcardFetchError, setFlashcardFetchError] = useState("");
   const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -15,14 +17,33 @@ function App() {
   const amountEl = useRef();
 
   useEffect(() => {
-    axios.get("https://opentdb.com/api_category.php").then((res) => {
-      setCategories(res.data.trivia_categories);
-    });
+    axios
+      .get("https://opentdb.com/api_category.php")
+      .then((res) => {
+        setCategories(res.data.trivia_categories);
+      })
+      .catch((error) => {
+        setWelcome(false);
+        if (error.response) {
+          setCategoryFetchError(
+            `Oops! No categories to show due to a server error (${error.response.status}). Come back another time!`
+          );
+        } else if (error.request) {
+          setCategoryFetchError(
+            "Oops! No categories to show due to a network error. Come back another time!"
+          );
+        } else {
+          setCategoryFetchError(
+            "Oops! No categories to show due to an error. Come back another time!"
+          );
+        }
+      });
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (welcome == true) setWelcome(false);
+    if (flashcardFetchError != "") setFlashcardFetchError("");
     setLoading(true);
     axios
       .get("https://opentdb.com/api.php", {
@@ -47,6 +68,22 @@ function App() {
             };
           })
         );
+        setLoading(false);
+      })
+      .catch((error) => {
+        if (error.response) {
+          setFlashcardFetchError(
+            `Oops! No flashcards to show due to a server error (${error.response.status}). Come back another time!`
+          );
+        } else if (error.request) {
+          setFlashcardFetchError(
+            "Oops! No flashcards to show due to a network error. Come back another time!"
+          );
+        } else {
+          setFlashcardFetchError(
+            "Oops! No flashcards to show due to an error. Come back another time!"
+          );
+        }
         setLoading(false);
       });
   }
@@ -87,6 +124,12 @@ function App() {
           <br />
           Please select a category and the number of questions to start playing.
         </p>
+      )}
+      {categoryFetchError && (
+        <p className="error-message">{categoryFetchError}</p>
+      )}
+      {flashcardFetchError && (
+        <p className="error-message">{flashcardFetchError}</p>
       )}
       <div className="container">
         {loading ? (
