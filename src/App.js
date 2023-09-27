@@ -3,7 +3,7 @@ import FlashcardList from "./components/FlashcardList";
 import { MagnifyingGlass } from "react-loader-spinner";
 import axios from "axios";
 import he from "he";
-import "./app.css";
+import "./app.scss";
 
 function App() {
   const [welcome, setWelcome] = useState(true);
