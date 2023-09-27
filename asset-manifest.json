@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/flashcard-quiz-app/static/css/main.2bb31a89.css",
+    "main.js": "/flashcard-quiz-app/static/js/main.19279e67.js",
+    "static/media/InclusiveSans-Regular.ttf": "/flashcard-quiz-app/static/media/InclusiveSans-Regular.c90498a52fdb2d34c72b.ttf",
+    "index.html": "/flashcard-quiz-app/index.html",
+    "main.2bb31a89.css.map": "/flashcard-quiz-app/static/css/main.2bb31a89.css.map",
+    "main.19279e67.js.map": "/flashcard-quiz-app/static/js/main.19279e67.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2bb31a89.css",
+    "static/js/main.19279e67.js"
+  ]
+}
